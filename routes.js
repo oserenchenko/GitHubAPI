@@ -6,9 +6,9 @@ router.get("/", function(req, res) {
   res.render("index");
 });
 
-router.get("/:url", function(req, res) {
+// router.get("/", function(req, res) {
 
-});
+// });
 
 // Export routes for server.js to use.
 module.exports = router;
