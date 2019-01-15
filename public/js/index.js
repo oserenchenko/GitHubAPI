@@ -5,8 +5,25 @@ function openPullReq(responseArr) {
     data: {responseArr}
   }).then(function() {
     console.log("passing data to backend");
+    window.location.href = "/";
   })
 };
+
+// 
+function commentsCommits (responseArr, urlCall) {
+  
+  for (i = 0; i < responseArr.length; i++) {
+    let commentsURL = "https://api.github.com/repos" + urlCall + "/pulls/" + responseArr[i].number + "/comments";
+    let commitsURL = "https://api.github.com/repos" + urlCall + "/pulls/" + responseArr[i].number + "/commits";
+    // $.ajax({
+    //   url: commentsURL,
+    //   method: "GET",
+    //   success: 
+    // })
+
+    // openPullReq(response);
+  }
+}
 
 //ajax call to GitHub API using input repository URL
 function gitHubCall(repoURL) {
@@ -16,10 +33,11 @@ function gitHubCall(repoURL) {
     method: "GET",
     success: function (response) {
       console.log(response);
-      console.log(typeof(response));
       if (response[0]) {
         $(".response").text("This repository has " + response.length + " open pull request(s):")
+        // commentsCommits(response, repoURL);
         openPullReq(response);
+
       } else {
         $(".response").text("This repository does NOT have any open pull requests.")
       }
