@@ -1,14 +1,16 @@
-var express = require("express");
-
-var router = express.Router();
+const express = require("express");
+const router = express.Router();
+let array = [];
 
 router.get("/", function(req, res) {
-  res.render("index");
+  res.render("index", {array: array});
 });
 
-// router.get("/", function(req, res) {
-
-// });
+router.post("/", function(req, res) {
+  console.log(req.body.responseArr);
+  array = [];
+  array = req.body.responseArr;
+});
 
 // Export routes for server.js to use.
 module.exports = router;
