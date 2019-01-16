@@ -1,8 +1,5 @@
 //passes results of open pull requests to backend through ajax call
 function openPullReq(responseArr, comments, commits) {
-  console.log(responseArr);
-  console.log(comments);
-  console.log(commits);
   $.ajax("/", {
     type: "POST",
     data: {
@@ -58,7 +55,6 @@ function gitHubCall(repoURL) {
     url: urlCall,
     method: "GET",
     success: function (response) {
-      console.log(response);
       if (response[0]) {
         $(".response").text("This repository has " + response.length + " open pull request(s):")
         commentsCommits(response, repoURL);
@@ -76,7 +72,6 @@ function gitHubCall(repoURL) {
 $(".btn").on("click", function (event) {
   event.preventDefault();
   let repoURL = $("#inputRepoURL").val().trim().slice(18);
-  console.log(repoURL);
   if (repoURL) {
     console.log("making call to GitHub API");
     gitHubCall(repoURL);
