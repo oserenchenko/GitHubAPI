@@ -3,13 +3,17 @@ function openPullReq(responseArr, comments, commits) {
   console.log(responseArr);
   console.log(comments);
   console.log(commits);
-  // $.ajax("/", {
-  //   type: "POST",
-  //   data: {responseArr}
-  // }).then(function() {
-  //   console.log("passing data to backend");
-  //   window.location.href = "/";
-  // })
+  $.ajax("/", {
+    type: "POST",
+    data: {
+      pullReqs: responseArr,
+      numComments: comments,
+      numCommits: commits
+    }
+  }).then(function() {
+    console.log("passing data to backend");
+    window.location.href = "/";
+  })
 };
 
 // 
