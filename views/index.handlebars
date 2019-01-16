@@ -8,7 +8,6 @@
 
 <div class="response"></div>
 
-
 <h2 id="repoName">Open Pull Requests for {{repoName}}</h2>
 <table class="table">
   <thead>
@@ -20,12 +19,12 @@
     </tr>
   </thead>
   <tbody>
-    {{#each pullReqs}}
+    {{#each pullReqsAll}}
     <tr>
-      <td>{{this.title}}</td>
-      <td>{{this.user.login}}</td>
-      <td></td>
-      <td></td>
+      <td>{{this.pullReqs.title}}</td>
+      <td>{{this.pullReqs.user.login}}</td>
+      <td>{{this.numComments}}</td>
+      <td>{{this.numCommits}}</td>
     </tr>
     {{/each}}
   </tbody>

@@ -1,20 +1,28 @@
 const express = require("express");
 const router = express.Router();
-let pullReqs = [];
+let pullReqsAll = [];
 let repoName = "";
 
 router.get("/", function(req, res) {
-  res.render("index",
-  {pullReqs: pullReqs, repoName: repoName}
+  res.render("index", {
+    repoName: repoName,
+    pullReqsAll: pullReqsAll
+  }
   );
 });
 
 router.post("/", function(req, res) {
-  console.log(req.body.responseArr);
-  pullReqs = [];
+  let data = req.body;
+  pullReqsAll = [];
+  for(i=0; i<data.pullReqs.length; i++) {
+    pullReqsAll.push({
+      pullReqs: data.pullReqs[i],
+      numComments: data.numComments[i],
+      numCommits: data.numCommits[i]
+    })
+  }
   repoName = "";
-  pullReqs = req.body.responseArr;
-  repoName = req.body.responseArr[0].head.repo.full_name;
+  repoName = data.pullReqs[0].head.repo.full_name;
   res.json(req.body);
 });
 
