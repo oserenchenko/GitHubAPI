@@ -1,34 +1,49 @@
 //passes results of open pull requests to backend through ajax call
-function openPullReq(responseArr) {
-  $.ajax("/", {
-    type: "POST",
-    data: {responseArr}
-  }).then(function() {
-    console.log("passing data to backend");
-    window.location.href = "/";
-  })
+function openPullReq(responseArr, comments, commits) {
+  console.log(responseArr);
+  console.log(comments);
+  console.log(commits);
+  // $.ajax("/", {
+  //   type: "POST",
+  //   data: {responseArr}
+  // }).then(function() {
+  //   console.log("passing data to backend");
+  //   window.location.href = "/";
+  // })
 };
 
 // 
 function commentsCommits (responseArr, urlCall) {
-  
+  let numComments = [];
+  let numCommits = [];
+  let itemsProcessed = 0;
   for (i = 0; i < responseArr.length; i++) {
+    itemsProcessed++;
     let commentsURL = "https://api.github.com/repos" + urlCall + "/pulls/" + responseArr[i].number + "/comments";
     let commitsURL = "https://api.github.com/repos" + urlCall + "/pulls/" + responseArr[i].number + "/commits";
+
+    //ajax call to get number of comments for pull request
     $.ajax({
       url: commentsURL,
       method: "GET",
-      success: function(response) {
-        console.log("comments", response);
-      },
-      error: function(request, status, errorThrown) {
-        console.log("error");
+      success: function(commentResponse) {
+        numComments.push(commentResponse.length);
+
+        //ajax call to get number of commits for pull request
+        $.ajax({
+          url: commitsURL,
+          method: "GET",
+          success: function(commitsResponse) {
+            numCommits.push(commitsResponse.length);
+            if (itemsProcessed === responseArr.length) {
+              openPullReq(responseArr, numComments, numCommits);
+            }
+          }
+        })
       }
     }).then(function() {
-      console.log("completed calls")
+      console.log("completed comments and commits calls")
     })
-
-    // openPullReq(response);
   }
 }
 
@@ -43,8 +58,6 @@ function gitHubCall(repoURL) {
       if (response[0]) {
         $(".response").text("This repository has " + response.length + " open pull request(s):")
         commentsCommits(response, repoURL);
-        // openPullReq(response);
-
       } else {
         $(".response").text("This repository does NOT have any open pull requests.")
       }
