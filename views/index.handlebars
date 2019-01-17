@@ -1,33 +1,58 @@
-<form>
-  <div class="form-group">
-    <label>Repository URL</label>
-    <input class="form-control" id="inputRepoURL" placeholder="Enter URL">
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12">
+      <h1>GitHub API Open Pull Requests</h1>
+    </div>
   </div>
-  <button type="submit" class="btn btn-primary">Submit</button>
-</form>
+  <div class="row">
+    <div class="col-sm-12">
+      <form>
+        <div class="form-group">
+          <label class="ol-form-label">Please Enter a Repository URL:</label>
+          <input class="form-control" id="inputRepoURL" placeholder="Enter URL">
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="response"></div>
+    </div>
+  </div>
+  {{#if repoName}}
+  <div class="row">
+    <div class="col-sm-12">
+      <h2 id="repoName">Open Pull Requests for {{repoName}}</h2>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Title</th>
+            <th scope="col">User</th>
+            <th scope="col"># of Comments</th>
+            <th scope="col"># of Commits</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each pullReqsAll}}
+          <tr>
+            <td>{{this.pullReqs.title}}</td>
+            <td>{{this.pullReqs.user.login}}</td>
+            <td>{{this.numComments}}</td>
+            <td>{{this.numCommits}}</td>
+          </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  {{/if}}
 
-<div class="response"></div>
 
-<h2 id="repoName">Open Pull Requests for {{repoName}}</h2>
-<table class="table">
-  <thead>
-    <tr>
-      <th scope="col">Title</th>
-      <th scope="col">User</th>
-      <th scope="col"># of Comments</th>
-      <th scope="col"># of Commits</th>
-    </tr>
-  </thead>
-  <tbody>
-    {{#each pullReqsAll}}
-    <tr>
-      <td>{{this.pullReqs.title}}</td>
-      <td>{{this.pullReqs.user.login}}</td>
-      <td>{{this.numComments}}</td>
-      <td>{{this.numCommits}}</td>
-    </tr>
-    {{/each}}
-  </tbody>
-</table>
+</div>
 
 <script src="./js/index.js"></script>

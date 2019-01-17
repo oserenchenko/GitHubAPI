@@ -20,7 +20,7 @@ function commentsCommits (responseArr, urlCall) {
   let itemsProcessed = 0;
   for (i = 0; i < responseArr.length; i++) {
     itemsProcessed++;
-    let commentsURL = "https://api.github.com/repos" + urlCall + "/pulls/" + responseArr[i].number + "/comments";
+    let commentsURL = "https://api.github.com/repos" + urlCall + "/issues/" + responseArr[i].number + "/comments";
     let commitsURL = "https://api.github.com/repos" + urlCall + "/pulls/" + responseArr[i].number + "/commits";
 
     //ajax call to get number of comments for pull request
@@ -56,7 +56,6 @@ function gitHubCall(repoURL) {
     method: "GET",
     success: function (response) {
       if (response[0]) {
-        $(".response").text("This repository has " + response.length + " open pull request(s):")
         commentsCommits(response, repoURL);
       } else {
         $(".response").text("This repository does NOT have any open pull requests.")
@@ -73,10 +72,8 @@ $(".btn").on("click", function (event) {
   event.preventDefault();
   let repoURL = $("#inputRepoURL").val().trim().slice(18);
   if (repoURL) {
-    console.log("making call to GitHub API");
     gitHubCall(repoURL);
   } else {
-    console.log("Please input a repository URL");
     $(".response").text("Please input a repository URL.");
   }
 });
