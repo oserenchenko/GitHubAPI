@@ -6,10 +6,15 @@ function openPullReq(responseArr, comments, commits) {
       pullReqs: responseArr,
       numComments: comments,
       numCommits: commits
+    }, 
+    success: function() {
+      console.log("passing data to backend");
+      window.location.href = "/";
+    },
+    error: function() {
+      $(".response").text("There are too many open pull requests for this repository - server is not yet built to handle this many.");
+      $(".pullReqInfo").css("display", "none");
     }
-  }).then(function() {
-    console.log("passing data to backend");
-    window.location.href = "/";
   })
 };
 
