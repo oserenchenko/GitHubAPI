@@ -7,8 +7,7 @@ router.get("/", function(req, res) {
   res.render("index", {
     repoName: repoName,
     pullReqsAll: pullReqsAll
-  }
-  );
+  })
 });
 
 router.post("/", function(req, res) {

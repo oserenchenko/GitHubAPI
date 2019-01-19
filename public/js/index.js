@@ -58,11 +58,13 @@ function gitHubCall(repoURL) {
       if (response[0]) {
         commentsCommits(response, repoURL);
       } else {
-        $(".response").text("This repository does NOT have any open pull requests.")
+        $(".response").text("This repository does NOT have any open pull requests.");
+        $(".pullReqInfo").css("display", "none");
       }
     },
     error: function (request, status, errorThrown) {
       $(".response").text("There has been an error, please check your repository URL to make sure it is correct.");
+      $(".pullReqInfo").css("display", "none");
     }
   })
 };
